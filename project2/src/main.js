@@ -12,6 +12,6 @@ import Event2 from "./Event2.vue";
 import FormBindings from "./FormBindings.vue";
 import Templating from "./Templating.vue";
 
-// import './assets/main.css'
+import router from "./router/index";
 
-createApp(Templating).mount("#app");
+createApp(Templating).use(router).mount("#app");
