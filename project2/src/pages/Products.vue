@@ -173,6 +173,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      method: "",
+      submit_url: "",
       products: [],
       edit_page: false,
       show_form: false,
@@ -201,17 +203,32 @@ export default {
       this.product_info = {};
       this.edit_page = false;
     },
-    addProduct() {
-      axios
-        .post("http://127.0.0.1:8000/api/products/", {
+    submitForm() {
+      this.errors = {};
+
+      // set method and url dynamically
+      if (this.product_info.id) {
+        this.method = "put";
+        this.submit_url =
+          "http://127.0.0.1:8000/api/products/" + this.product_info.id;
+      } else {
+        this.method = "post";
+        this.submit_url = "http://127.0.0.1:8000/api/products/";
+      }
+
+      // call axios for both method
+      axios({
+        method: this.method,
+        url: this.submit_url,
+        data: {
           product_name: this.product_info.name,
           product_details: this.product_info.details,
           product_price: this.product_info.price,
           product_stock: this.product_info.stock,
           product_category: this.product_info.category,
-        })
+        },
+      })
         .then((res) => {
-          // console.log(res.data);
           if (res.data.success) {
             this.errors = {};
             this.product_info = {};
@@ -224,35 +241,6 @@ export default {
         .catch((err) => {
           this.errors = err.response.data.errors;
         });
-    },
-    updateProduct() {
-      axios
-        .put("http://127.0.0.1:8000/api/products/" + this.product_info.id, {
-          product_name: this.product_info.name,
-          product_details: this.product_info.details,
-          product_price: this.product_info.price,
-          product_stock: this.product_info.stock,
-          product_category: this.product_info.category,
-        })
-        .then((res) => {
-          this.errors = {};
-          this.product_info = {};
-          this.show_form = false;
-          this.getProducts();
-          window.scrollTo(0, 0);
-          alert(res.data.msg);
-        })
-        .catch((err) => {
-          this.errors = err.response.data.errors;
-        });
-    },
-    submitForm() {
-      this.errors = {};
-      if (this.product_info.id) {
-        this.updateProduct();
-      } else {
-        this.addProduct();
-      }
     },
     deleteProduct(id) {
       axios.delete("http://127.0.0.1:8000/api/products/" + id).then((res) => {
@@ -279,6 +267,7 @@ export default {
     cancelForm() {
       this.edit_page = false;
       this.show_form = false;
+      this.errors = {};
       this.product_info = {};
 
       window.scrollTo(0, 0);
