@@ -173,8 +173,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      // method: "",
-      // submit_url: "",
+      method: "",
+      submit_url: "",
       products: [],
       edit_page: false,
       show_form: false,
