@@ -14,4 +14,29 @@ import Templating from "./Templating.vue";
 
 import router from "./router/index";
 
-createApp(Templating).use(router).mount("#app");
+import { createStore } from "vuex";
+const store = createStore({
+  state() {
+    return {
+      counter: 0,
+      cart: [],
+    };
+  },
+  mutations: {
+    addToCart(state, product) {
+      const exist = state.cart.find((x) => x.id === product.id);
+      if (exist) {
+        state.cart = state.cart.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        );
+      } else {
+        state.cart = [...state.cart, { ...product, qty: 1 }];
+      }
+    },
+  },
+});
+
+const app = createApp(Templating);
+app.use(router);
+app.use(store);
+app.mount("#app");

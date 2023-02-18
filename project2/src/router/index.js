@@ -5,6 +5,7 @@ import Contact from "../pages/Contact.vue";
 import News from "../pages/News.vue";
 import Products from "../pages/Products.vue";
 import FindProduct from "../pages/FindProduct.vue";
+import Cart from "../pages/Cart.vue";
 
 // Routing
 import { createRouter, createWebHistory } from "vue-router";
@@ -15,6 +16,7 @@ const routes = [
   { path: "/news", component: News },
   { path: "/products", component: Products },
   { path: "/products/find", component: FindProduct },
+  { path: "/cart", component: Cart },
 ];
 
 const router = createRouter({

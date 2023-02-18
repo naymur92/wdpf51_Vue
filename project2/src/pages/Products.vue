@@ -152,6 +152,12 @@
             <div class="card-body">
               <p>{{ item.product_details }}</p>
             </div>
+            <button
+              @click="$store.commit('addToCart', item)"
+              class="btn btn-outline-warning"
+            >
+              Add to Cart
+            </button>
             <div class="card-footer d-flex justify-content-between">
               <button class="btn btn-success" @click="editProduct(item)">
                 Edit
