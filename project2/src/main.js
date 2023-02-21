@@ -11,6 +11,8 @@ import Event1 from "./Event1.vue";
 import Event2 from "./Event2.vue";
 import FormBindings from "./FormBindings.vue";
 import Templating from "./Templating.vue";
+import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
+import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 
 import router from "./router/index";
 
@@ -37,6 +39,8 @@ const store = createStore({
 });
 
 const app = createApp(Templating);
+app.component("VueCtkDateTimePicker", VueCtkDateTimePicker);
+
 app.use(router);
 app.use(store);
 app.mount("#app");
